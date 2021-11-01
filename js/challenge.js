@@ -23,16 +23,34 @@ window.addEventListener('DOMContentLoaded', function () {
         counterDisplay.innerHTML = counterNumber;
     })
 
+    const likesList = document.querySelector('.likes');
+    const counterLikes = {}
+
     heartButton.addEventListener('click', function() {
-        const likesList = document.querySelector('.likes');
-        let likesCount;
-        let likesStatement = function() {
-            if (likesCount < 2) {
-                likeStatement = `<li>${countNumber} has been liked ${likesCount} time</li>`;
-            } else {
-                likeStatement = `<li>${countNumber} has been liked ${likesCount} times</li>`;
-            }
+        let likedNumber = counterNumber;
+        let likesStatement;
+        if (counterLikes.hasOwnProperty(likedNumber) === false) {
+            counterLikes[likedNumber] = 1;
+        } else {
+            counterLikes[likedNumber] = counterLikes[likedNumber] + 1;
+        };    
+        if (counterLikes[likedNumber] < 2) {
+            likesStatement = `${likedNumber} has been liked ${counterLikes[likedNumber]} time`;
+        } else {
+            likesStatement = `${likedNumber} has been liked ${counterLikes[likedNumber]} times`;
         }
-        likesList.appendChild = likesStatement;
+        const listItem = document.createElement('li');
+        listItem.innerHTML = likesStatement;
+        likesList.appendChild(listItem);
+    })
+
+    const commentForm = document.querySelector('#comment-form')
+    const commentList = document.querySelector('#list');
+    commentForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newComment = document.querySelector('#comment-input');
+        const listItem = document.createElement('<p>');
+        listItem.innerHTML = newComment;
+        commentList.appendChild(listItem);
     })
 })
