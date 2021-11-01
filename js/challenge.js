@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 
     const likesList = document.querySelector('.likes');
-    const counterLikes = {}
+    const counterLikes = []
 
     heartButton.addEventListener('click', function() {
         let likedNumber = counterNumber;
@@ -34,14 +34,17 @@ window.addEventListener('DOMContentLoaded', function () {
         } else {
             counterLikes[likedNumber] = counterLikes[likedNumber] + 1;
         }
-        if (counterLikes[likedNumber] < 2) {
-            likesStatement = `${likedNumber} has been liked ${counterLikes[likedNumber]} time`;
-        } else {
-            likesStatement = `${likedNumber} has been liked ${counterLikes[likedNumber]} times`;
+        likesList.innerHTML = "";
+        for (const number in counterLikes) {
+            if (counterLikes[number] < 2) {
+                likesStatement = `${number} has been liked ${counterLikes[number]} time`;
+            } else {
+                likesStatement = `${number} has been liked ${counterLikes[number]} times`;
+            }
+            const listItem = document.createElement('li');
+            listItem.innerHTML = likesStatement;
+            likesList.appendChild(listItem);
         }
-        const listItem = document.createElement('li');
-        listItem.innerHTML = likesStatement;
-        likesList.appendChild(listItem);
     });
 
     const commentForm = document.querySelector('#comment-form');
